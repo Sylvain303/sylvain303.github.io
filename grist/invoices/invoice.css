@@ -1,27 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
 body {
-  font-family: Sans-Serif;
+  font-family: 'Roboto', sans-serif;
   max-width: 800px;
   margin: 0 auto;
   padding: 5px;
+  background-color: #FFFDFB;
+  color: #000000;
 }
 
 a {
-  color: #0000EE;
+  color: #FF5700;
 }
 
 .invoice {
-  background-color: white;
-  color: black;
+  background-color: #FFFDFB;
+  color: #000000;
   padding: 16px;
 }
 
 .meta {
-  color: #ff8000;
+  color: #FF5700;
 }
 
 .header .title {
+  font-family: 'Oswald', sans-serif;
   font-size: 300%;
-  font-weight: bold;
+  font-weight: 700;
+  color: #285A5B;
+  text-transform: uppercase;
 }
 
 .header .meta {
@@ -37,7 +44,7 @@ a {
 }
 
 .supplier {
-  color: #4682B4;
+  color: #285A5B;
   display: block;
 }
 
@@ -50,7 +57,7 @@ a {
   padding: 1px;
   margin-top: 1em;
   margin-bottom: 1em;
-  background: #ff8000;
+  background: #FF5700;
   -webkit-print-color-adjust: exact !important;
   color-adjust: exact !important;
 }
@@ -59,16 +66,18 @@ a {
   margin-left: 4px;
   color: white;
   text-transform: uppercase;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
 }
 
 .client .details, .summary .details {
   padding: 4px;
-  background-color: white;
+  background-color: #FFFDFB;
 }
 
 table.items {
   width: 100%;
-  border: 1px solid #ff8000;
+  border: 1px solid #FF5700;
   border-collapse: collapse;
 }
 
@@ -76,12 +85,14 @@ table.items th {
   text-align: left;
   color: white;
   text-transform: uppercase;
-  font-weight: normal;
+  font-weight: 700;
+  font-family: 'Oswald', sans-serif;
   padding: 4px;
+  background-color: #FF5700;
 }
 
 table.items td {
-  background-color: white;
+  background-color: #FFFDFB;
   padding: 4px;
 }
 
@@ -95,7 +106,8 @@ table.items td {
 }
 
 .name {
-  color: #000080;
+  color: #285A5B;
+  font-weight: 700;
 }
 
 .address {
@@ -133,8 +145,9 @@ div.summary .part {
 div.summary .total {
   display: block;
   flex-grow: 1;
-  background: #000080;
+  background: #285A5B;
   font-size: 140%;
+  color: white;
 }
 
 div.summary {
@@ -164,13 +177,15 @@ div.summary::after {
 
 .email::before {
   content: "\2709";
-  margin-right: 0.5em;  
+  margin-right: 0.5em;
 }
 
 .thanks {
   text-align: right;
-  color: #C83200;
+  color: #009490;
   font-size: 200%;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
 }
 
 div.instructions, .newlined, p.note {
@@ -180,13 +195,15 @@ div.instructions, .newlined, p.note {
 div.paid {
   position: relative;
   left: 40%;
-  color: red;
+  color: #009490;
+  border-color: #009490;
   rotate: 15deg;
   font-size: 80px;
   top: 20px;
-  border: 5px solid red;
+  border: 5px solid #009490;
   float: left;
   font-weight: bolder;
+  font-family: 'Oswald', sans-serif;
 }
 
 .app {
@@ -206,7 +223,7 @@ div.print {
 }
 
 div.print a {
-  background: #C83200;
+  background: #FF5700;
   display: block;
   font-size: 200%;
   color: white;
@@ -216,10 +233,12 @@ div.print a {
   padding-right: 0.5em;
   border-top-right-radius: 0.5em;
   text-transform: uppercase;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
 }
 
 div.print a:hover {
-  background: #4682B4;
+  background: #009490;
 }
 
 .done {
@@ -231,7 +250,7 @@ div.column-name {
 }
 
 .column-name {
-  background: blue;
+  background: #285A5B;
   color: white;
   margin: 2px;
   padding: 2px;
@@ -240,22 +259,22 @@ div.column-name {
 }
 
 .column-recognized {
-  background: green;
+  background: #009490;
 }
 
 .column-expected {
-  background: blue;
+  background: #285A5B;
 }
 
 .column-ignored {
-  background: red;
+  background: #FF5700;
 }
 
 .help {
   padding: 1px;
   margin-top: 1em;
   margin-bottom: 1em;
-  background: black;
+  background: #285A5B;
   color: white;
 }
 
@@ -288,8 +307,8 @@ div.column-name {
 
 .help pre {
   display: inline-block;
-  background: #ddd;
-  color: #000;
+  background: #FFFDFB;
+  color: #285A5B;
   padding: 0.25em;
   margin-left: 1em;
 }
@@ -297,6 +316,8 @@ div.column-name {
 .help .title {
   margin-left: 4px;
   text-transform: uppercase;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
 }
 
 .status {
@@ -306,7 +327,7 @@ div.column-name {
 .status .button {
   display: inline-block;
   text-decoration: none;
-  color: #000080;
+  color: #285A5B;
   background: #ddd;
   padding-left: 0.5em;
   padding-right: 0.5em;
@@ -316,4 +337,3 @@ div.column-name {
   margin-bottom: 1px;
   border-radius: 0.25em;
 }
-
