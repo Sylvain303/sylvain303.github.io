@@ -76,7 +76,8 @@ a {
 }
 
 div.summary .total .details {
-  background-color: transparent;
+  background-color: #FFFDFB;
+  color: #000000;
 }
 
 table.items {
