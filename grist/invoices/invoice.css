@@ -20,7 +20,7 @@ a {
 }
 
 .meta {
-  color: #FF5700;
+  color: #009490;
 }
 
 .header .title {
@@ -57,7 +57,7 @@ a {
   padding: 1px;
   margin-top: 1em;
   margin-bottom: 1em;
-  background: #FF5700;
+  background: #009490;
   -webkit-print-color-adjust: exact !important;
   color-adjust: exact !important;
 }
@@ -77,7 +77,7 @@ a {
 
 table.items {
   width: 100%;
-  border: 1px solid #FF5700;
+  border: 1px solid #009490;
   border-collapse: collapse;
 }
 
@@ -88,7 +88,7 @@ table.items th {
   font-weight: 700;
   font-family: 'Oswald', sans-serif;
   padding: 4px;
-  background-color: #FF5700;
+  background-color: #009490;
 }
 
 table.items td {
@@ -223,7 +223,7 @@ div.print {
 }
 
 div.print a {
-  background: #FF5700;
+  background: #009490;
   display: block;
   font-size: 200%;
   color: white;
@@ -267,7 +267,7 @@ div.column-name {
 }
 
 .column-ignored {
-  background: #FF5700;
+  background: #4F7170;
 }
 
 .help {
