@@ -91,6 +91,14 @@ table.items th {
   background-color: #009490;
 }
 
+table.items th.money {
+  text-align: right;
+}
+
+table.items th.number {
+  text-align: center;
+}
+
 table.items td {
   background-color: #FFFDFB;
   padding: 4px;
