@@ -75,6 +75,10 @@ a {
   background-color: #FFFDFB;
 }
 
+div.summary .total .details {
+  background-color: transparent;
+}
+
 table.items {
   width: 100%;
   border: 1px solid #009490;
