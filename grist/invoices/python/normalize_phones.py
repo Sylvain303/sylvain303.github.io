@@ -10,9 +10,8 @@ Pipeline:
                         line is exhausted, or raise PhoneParsingError on remainder.
 
 Design note on bare numbers (no initials):
-  The spec requires Group 1 to be one-or-more letters, so a line like
-  "06 12 34 45 75" (no initials) will never match and raises PhoneParsingError.
-  This is intentional: initials are mandatory to identify the record owner.
+  Initials are optional. A line like "06 12 34 45 75" is valid and produces
+  {"initials": "", "phone": "0612344575"}.
 """
 
 import json
@@ -27,20 +26,23 @@ class PhoneNormalizer:
     """
     Normalizes raw French phone number text into serialized JSON.
 
+    All methods are class methods — no instance needed.
+
     Usage:
-        normalizer = PhoneNormalizer()
-        json_str = normalizer.normalize("JD 06 12 34 45 75")
+        json_str = PhoneNormalizer.normalize("JD 06 12 34 45 75")
     """
 
     _PHONE_RE = re.compile(
-        r'([A-Za-z]+)\s+(\d{2})\s+(\d{2})\s+(\d{2})\s+(\d{2})\s+(\d{2})'
+        r'([A-Za-z]*)\s*(\d{2})\s*(\d{2})\s*(\d{2})\s*(\d{2})\s*(\d{2})'
     )
 
-    def clean_raw(self, text: str) -> str:
+    @classmethod
+    def clean_raw(cls, text: str) -> str:
         """Step 1 – replace every non-alphanumeric character with a single space."""
         return re.sub(r'[^A-Za-z0-9]', ' ', text)
 
-    def _parse_line(self, line: str) -> list[dict]:
+    @classmethod
+    def _parse_line(cls, line: str) -> list[dict]:
         """Iteratively extract all (initials, phone) pairs from a single cleaned line."""
         results = []
         remaining = line
@@ -50,7 +52,7 @@ class PhoneNormalizer:
             if not remaining:
                 break
 
-            m = self._PHONE_RE.search(remaining)
+            m = cls._PHONE_RE.search(remaining)
             if m:
                 initials = m.group(1).upper()
                 phone = ''.join(m.group(i) for i in range(2, 7))
@@ -63,7 +65,8 @@ class PhoneNormalizer:
 
         return results
 
-    def normalize(self, raw_text: str, indent: int = 2) -> str:
+    @classmethod
+    def normalize(cls, raw_text: str, indent: int = 2) -> str:
         """
         Normalize raw French phone number text into a JSON string.
 
@@ -84,17 +87,48 @@ class PhoneNormalizer:
         PhoneParsingError
             If any non-empty line segment cannot be matched.
         """
-        cleaned = self.clean_raw(raw_text)
+        cleaned = cls.clean_raw(raw_text)
         lines = cleaned.split('\n')
         results = []
         for line in lines:
-            results.extend(self._parse_line(line))
+            results.extend(cls._parse_line(line))
+        return json.dumps(results, indent=indent, ensure_ascii=False)
+
+
+    @classmethod
+    def normalize_multiple(cls, *raw_texts: str, indent: int = 2) -> str:
+        """
+        Normalize multiple raw inputs and merge all results into a single JSON list.
+
+        Parameters
+        ----------
+        *raw_texts : str
+            Any number of raw input strings.
+        indent : int
+            JSON indentation level (default 2).
+
+        Returns
+        -------
+        str
+            JSON-serialized list of all {"initials": ..., "phone": ...} dicts
+            collected across all inputs, in order.
+
+        Raises
+        ------
+        PhoneParsingError
+            If any non-empty line segment cannot be matched.
+        """
+        results = []
+        for raw_text in raw_texts:
+            cleaned = cls.clean_raw(raw_text)
+            for line in cleaned.split('\n'):
+                results.extend(cls._parse_line(line))
         return json.dumps(results, indent=indent, ensure_ascii=False)
 
 
 def normalize_phones(raw_text: str, indent: int = 2) -> str:
     """Module-level convenience wrapper around PhoneNormalizer.normalize()."""
-    return PhoneNormalizer().normalize(raw_text, indent=indent)
+    return PhoneNormalizer.normalize(raw_text, indent=indent)
 
 
 # ---------------------------------------------------------------------------
@@ -104,13 +138,11 @@ def normalize_phones(raw_text: str, indent: int = 2) -> str:
 if __name__ == "__main__":
     import sys
 
-    normalizer = PhoneNormalizer()
-
     def run(label: str, raw: str, expect_error: bool = False) -> None:
         print(f"--- {label} ---")
         print(f"Input: {raw!r}")
         try:
-            result = normalizer.normalize(raw)
+            result = PhoneNormalizer.normalize(raw)
             if expect_error:
                 print("FAIL – expected PhoneParsingError but got none.")
                 sys.exit(1)
@@ -123,11 +155,10 @@ if __name__ == "__main__":
                 sys.exit(1)
         print()
 
-    # 1. No initials – must raise PhoneParsingError (initials are mandatory).
+    # 1. No initials – parsed with empty prefix.
     run(
         "bare number, no initials",
         "06 12 34 45 75",
-        expect_error=True,
     )
 
     # 2. Two records on separate lines.
@@ -153,4 +184,8 @@ if __name__ == "__main__":
     run(
         "punctuation separators, multi-letter initials",
         "MLD: 06.78.90.12.34 / JR: 07-11-22-33-44",
+    )
+    run(
+            "fred: ",
+        "Fred  0617543564",
     )
