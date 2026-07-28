@@ -2,7 +2,8 @@ body {
   font-family: Sans-Serif;
   padding: 0;
   margin: 0;
-  --label-outline: 0 0 0 1px var(--grist-theme-decoration, #d9d9d9);
+  --label-outline-screen: 0 0 0 1px var(--grist-theme-decoration, #d9d9d9);
+  --label-outline: var(--label-outline-screen);
 }
 
 *, *:before, *:after {
@@ -201,7 +202,7 @@ body {
 
 @media print {
   body {
-    --label-outline: var(--label-outline-print, none);
+    --label-outline: var(--label-outline-print, var(--label-outline-screen));
   }
   html, body, #app, .page-outer, #content, #content-wrap {
     height: 100%;

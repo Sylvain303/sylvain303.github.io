@@ -180,7 +180,7 @@ ready(function() {
       printBorder: {
         immediate: true,
         handler(value) {
-          document.body.style.setProperty('--label-outline-print', value ? 'var(--label-outline)' : 'none');
+          document.body.style.setProperty('--label-outline-print', value ? '' : 'none');
         }
       }
     },
