@@ -7,6 +7,7 @@ function ready(fn) {
 }
 
 const templates = [{
+  // A4, 63.5 x 38.1 mm. Matches Avery L7160: https://www.avery.fr/modele-l7160
   id: 'labels21a4',
   name: '21 per sheet A4 (63.5 x 38.1 mm)',
   perPage: 21,
@@ -55,6 +56,8 @@ let data = {
   // Blanks, if positive, tells to leave this number of labels blank before starting to populate
   // them with data.
   blanks: 0,
+  // Whether to also print the outline border around each label (it's always shown on screen).
+  printBorder: false,
   rows: null
 };
 
@@ -150,10 +153,12 @@ ready(function() {
       // Read saved options.
       data.template = findTemplate(options.template) || defaultTemplate;
       data.blanks = options.blanks || 0;
+      data.printBorder = options.printBorder || false;
     } else {
       // Revert to defaults.
       data.template = defaultTemplate;
       data.blanks = 0;
+      data.printBorder = false;
     }
   })
   // Update the widget anytime the document data changes.
@@ -171,6 +176,12 @@ ready(function() {
     watch : {
       rows() {
         updateRecords();
+      },
+      printBorder: {
+        immediate: true,
+        handler(value) {
+          document.body.style.setProperty('--label-outline-print', value ? 'var(--label-outline)' : 'none');
+        }
       }
     },
     methods: {
@@ -179,6 +190,7 @@ ready(function() {
         // Custom save handler to save only when user changed the value.
         await grist.widgetApi.setOption('template', this.template.id);
         await grist.widgetApi.setOption('blanks', this.blanks);
+        await grist.widgetApi.setOption('printBorder', this.printBorder);
       }
     },
     updated: () => setTimeout(updateSize, 0),

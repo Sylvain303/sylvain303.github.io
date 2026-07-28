@@ -72,6 +72,7 @@ body {
  */
 
 /* A4 (210 x 297mm), matches Avery L7160 / HERMA 4677 / APLI 01992 templates. */
+/* Ref: https://www.avery.fr/modele-l7160 */
 .page-labels21a4 {
   --vmargin: 15.15mm;
   --hmargin: 7.5mm;
@@ -200,7 +201,7 @@ body {
 
 @media print {
   body {
-    --label-outline: none;
+    --label-outline: var(--label-outline-print, none);
   }
   html, body, #app, .page-outer, #content, #content-wrap {
     height: 100%;

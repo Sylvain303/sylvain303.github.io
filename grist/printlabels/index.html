@@ -33,6 +33,7 @@
       <div v-show="showOptions" id="options-container" v-on:click="showOptions = false">
         <div id="options-popup" v-on:click.stop>
           <div>Leave initial blanks <input type="number" id="blanks" v-model="blanks" @change="save()"></div>
+          <div><label><input type="checkbox" id="print-border" v-model="printBorder" @change="save()"> Print label border</label></div>
         </div>
       </div>
       <template v-if="labels">
