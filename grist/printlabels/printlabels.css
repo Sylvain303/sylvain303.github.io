@@ -2,7 +2,7 @@ body {
   font-family: Sans-Serif;
   padding: 0;
   margin: 0;
-  --label-outline-screen: 0 0 0 1px var(--grist-theme-decoration, #d9d9d9);
+  --label-outline-screen: 1px solid var(--grist-theme-decoration, #d9d9d9);
   --label-outline: var(--label-outline-screen);
 }
 
@@ -52,7 +52,7 @@ body {
   align-items: center;
   justify-content: center;
   vertical-align: bottom;
-  box-shadow: var(--label-outline);
+  border: var(--label-outline);
 }
 
 .labelpage {
@@ -202,7 +202,7 @@ body {
 
 @media print {
   body {
-    --label-outline: var(--label-outline-print, var(--label-outline-screen));
+    --label-outline: var(--label-outline-print, none);
   }
   html, body, #app, .page-outer, #content, #content-wrap {
     height: 100%;
