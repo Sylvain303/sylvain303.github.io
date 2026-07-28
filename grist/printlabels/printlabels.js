@@ -128,21 +128,6 @@ function updateSize() {
   document.body.style.setProperty('--page-scaling', 1);
   const pageWidth = page.getBoundingClientRect().width;
   document.body.style.setProperty('--page-scaling', window.innerWidth / pageWidth);
-  logDebugStyles();
-}
-
-// Debug helper: logs what the browser actually resolved for the label border, as opposed to
-// what we tried to set. Remove once print-border troubleshooting is done.
-function logDebugStyles() {
-  const label = document.querySelector('.label');
-  if (!label) { return; }
-  const computed = getComputedStyle(label);
-  console.log('[printlabels] debug: --label-outline-print (inline, body) =',
-    document.body.style.getPropertyValue('--label-outline-print'));
-  console.log('[printlabels] debug: --label-outline (computed, .label) =',
-    getComputedStyle(document.body).getPropertyValue('--label-outline'));
-  console.log('[printlabels] debug: border (computed, .label) =', computed.border, computed.borderWidth, computed.borderStyle, computed.borderColor);
-  console.log('[printlabels] debug: box-shadow (computed, .label) =', computed.boxShadow);
 }
 
 ready(function() {
@@ -195,9 +180,7 @@ ready(function() {
       printBorder: {
         immediate: true,
         handler(value) {
-          const outline = value ? '1px solid #999' : 'none';
-          document.body.style.setProperty('--label-outline-print', outline);
-          console.log('[printlabels] printBorder =', value, '-> --label-outline-print =', outline);
+          document.body.style.setProperty('--label-outline-print', value ? '1px solid #999' : 'none');
         }
       }
     },

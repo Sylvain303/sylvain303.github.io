@@ -27,6 +27,11 @@ label sheets (French/EU market) in addition to the original US Letter sheets.
   screen guide and was always stripped at print time (`--label-outline:
   none` in `@media print`); this option is unchecked by default to preserve
   that original behavior, and when checked the outline is printed too.
+  The outline itself was switched from `box-shadow` to a real `border` on
+  `.label`, since `box-shadow` is treated as a background/decoration effect
+  by some browsers' print engines (observed in Firefox print-to-PDF: no
+  border printed even with "print background colors" enabled) and isn't
+  reliably printed, while `border` is real box content and always is.
 
 ## Deployment
 
